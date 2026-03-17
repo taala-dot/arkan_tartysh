@@ -26,8 +26,9 @@ const loseGif = document.getElementById('lose-gif');
 const saveScoreBtn = document.getElementById('save-score-btn');
 const playerNameInput = document.getElementById('player-name');
 const leaderboardList = document.getElementById('leaderboard-list');
+const leaderboardTitle = document.getElementById('leaderboard-title');
 
-// Кнопки режимов (добавьте их в HTML)
+// Кнопки режимов
 const classicModeBtn = document.getElementById('classic-mode-btn');
 const speedModeBtn = document.getElementById('speed-mode-btn');
 
@@ -48,17 +49,22 @@ let typingSound = null;
 try {
     typingSound = new Audio('assets/typing.mp3');
     typingSound.volume = 0.2;
-} catch (e) {}
+} catch (e) {
+    console.log('Звук не загружен');
+}
 
 // Инициализация
 function initGame() {
+    // Проверяем наличие GIF
+    checkGifs();
+    
     rope = new Rope(ropeKnot, -70, 70);
     stats = new Stats(({ wpm, accuracy }) => {
         wpmDisplay.textContent = wpm;
         accuracyDisplay.textContent = accuracy;
     });
 
-    // Создаём объект скоростного режима с бесконечным текстом
+    // Создаём объект скоростного режима
     speedMode = new SpeedMode(
         sentenceDisplay,
         typingInput,
@@ -70,8 +76,11 @@ function initGame() {
             gameActive = false;
             resultTitle.textContent = '⚡ ЧЕМПИОН ЫЛДАМДЫГЫ ⚡';
             resultStats.textContent = `${result.chunks} чонк | ${result.chars} символ | WPM: ${result.wpm} | Тактык: ${result.accuracy}%`;
+            
+            // Показываем win GIF (для скорости используем win-gif)
             winGif.style.display = 'block';
             loseGif.style.display = 'none';
+            
             resultOverlay.classList.remove('hidden');
             startBtn.disabled = false;
             restartBtn.disabled = true;
@@ -88,6 +97,7 @@ function initGame() {
         resetGame();
     });
     saveScoreBtn.addEventListener('click', saveScoreHandler);
+    
     typingInput.addEventListener('input', (e) => {
         if (currentMode === 'classic' && typingHandler) {
             typingHandler.handleInput(e);
@@ -103,6 +113,7 @@ function initGame() {
         currentMode = 'classic';
         resetGame();
         renderLeaderboard(leaderboardList);
+        if (leaderboardTitle) leaderboardTitle.textContent = '(Топ 10 WPM)';
     });
 
     speedModeBtn.addEventListener('click', () => {
@@ -114,6 +125,17 @@ function initGame() {
     });
 
     typingInput.disabled = true;
+}
+
+// Проверка наличия GIF
+function checkGifs() {
+    const leftGif = document.getElementById('left-gif');
+    const rightGif = document.getElementById('right-gif');
+    const winGifEl = document.getElementById('win-gif');
+    const loseGifEl = document.getElementById('lose-gif');
+    
+    // Если GIF не загрузились, они заменятся SVG через onerror
+    console.log('Проверка GIF...');
 }
 
 function newSentence() {
@@ -140,6 +162,7 @@ function startGame() {
         const initialTime = difficultySettings[difficultySelect.value];
         rope.reset();
         stats.start();
+        
         if (timer) {
             timer.reset(initialTime);
         } else {
@@ -257,8 +280,10 @@ function winGame(message) {
 
     resultTitle.textContent = '🏆 ЖЕҢИШ 🏆';
     resultStats.textContent = `WPM: ${stats.getWPM()} | Тактык: ${stats.getAccuracy()}%`;
+    
     winGif.style.display = 'block';
     loseGif.style.display = 'none';
+    
     resultOverlay.classList.remove('hidden');
 
     saveScoreBtn.disabled = false;
@@ -274,8 +299,10 @@ function loseGame(message) {
 
     resultTitle.textContent = '💔 ЖЕҢИЛҮҮ 💔';
     resultStats.textContent = message;
+    
     winGif.style.display = 'none';
     loseGif.style.display = 'block';
+    
     resultOverlay.classList.remove('hidden');
 
     saveScoreBtn.disabled = true;

@@ -1,5 +1,14 @@
-// typing.js – полностью переработан, без ошибок
+// typing.js – отвечает за отображение текста, подсветку и вызов колбэков
 export class TypingHandler {
+    /**
+     * @param {string} sentence - целевое предложение
+     * @param {HTMLInputElement} inputEl - поле ввода
+     * @param {HTMLElement} displayEl - контейнер для отображения букв
+     * @param {Function} onCorrect - вызывается при правильном символе
+     * @param {Function} onWrong - вызывается при неправильном символе
+     * @param {Function} onBackspace - вызывается при стирании
+     * @param {Function} onComplete - вызывается при завершении предложения
+     */
     constructor(sentence, inputEl, displayEl, onCorrect, onWrong, onBackspace, onComplete) {
         this.sentence = sentence;
         this.input = inputEl;
@@ -11,24 +20,27 @@ export class TypingHandler {
 
         this.chars = sentence.split('');
         this.spans = [];
-        this.index = 0;
+        this.index = 0;         // индекс следующего символа для набора
         this.active = false;
         this.completed = false;
 
         this._render();
     }
 
+    // Отрисовка букв в виде отдельных span
     _render() {
         this.display.innerHTML = '';
         this.spans = this.chars.map(char => {
             const span = document.createElement('span');
             span.textContent = char;
+            // небольшой отступ для пробелов
             if (char === ' ') span.style.marginRight = '6px';
             return span;
         });
         this.spans.forEach(span => this.display.appendChild(span));
     }
 
+    // Активировать обработчик (начать приём ввода)
     start() {
         console.log('✅ TypingHandler started');
         this.active = true;
@@ -40,11 +52,13 @@ export class TypingHandler {
         this.spans.forEach(s => s.classList.remove('correct', 'wrong'));
     }
 
+    // Деактивировать
     stop() {
         this.active = false;
         this.input.disabled = true;
     }
 
+    // Сброс с новым предложением
     reset(newSentence) {
         this.sentence = newSentence;
         this.chars = newSentence.split('');
@@ -54,13 +68,14 @@ export class TypingHandler {
         this.active = false;
     }
 
+    // Обработка события input
     handleInput(e) {
         if (!this.active || this.completed) return;
 
         const val = e.target.value;
         const len = val.length;
 
-        // Backspace
+        // Обработка Backspace (удаление символов)
         if (len < this.index) {
             const diff = this.index - len;
             for (let i = 0; i < diff; i++) {
@@ -73,7 +88,7 @@ export class TypingHandler {
             return;
         }
 
-        // Новые символы (обрабатываем по одному)
+        // Новые символы (обрабатываем по одному – последний введённый)
         if (len > this.index) {
             // Берём только последний введённый символ
             const newChar = val[len - 1];
@@ -90,7 +105,7 @@ export class TypingHandler {
 
             this.index++;
 
-            // Проверка завершения
+            // Проверка на завершение предложения
             if (this.index === this.chars.length) {
                 this.completed = true;
                 this.active = false;

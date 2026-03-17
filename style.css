@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Segoe UI', 'Arial', sans-serif;
-    background: #4a0404; /* тёмно-красный */
+    background: #4a0404;
     background-image: radial-gradient(circle at 10% 30%, #8b0000 0%, #4a0404 90%);
     color: #fff3e0;
     min-height: 100vh;
@@ -20,7 +20,7 @@ body {
 .game-container {
     max-width: 1000px;
     width: 100%;
-    background: #7a1f1f; /* бордовый */
+    background: #7a1f1f;
     border-radius: 40px 40px 20px 20px;
     padding: 24px;
     box-shadow: 0 20px 30px rgba(0,0,0,0.8), 0 0 0 2px #f0c45a inset;
@@ -28,7 +28,6 @@ body {
     position: relative;
 }
 
-/* Имитация кыргызского орнамента */
 .game-container::before {
     content: "";
     position: absolute;
@@ -82,6 +81,39 @@ body {
     border-radius: 40px;
 }
 
+/* Переключатель режимов */
+.mode-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-mode {
+    background: #5e1a1a;
+    color: #fdd835;
+    border: 2px solid #fdd835;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    flex: 1;
+    max-width: 200px;
+}
+
+.btn-mode.active {
+    background: #fdd835;
+    color: #4a0404;
+    border-color: #fff3b0;
+    font-weight: bold;
+}
+
+.btn-mode:hover {
+    background: #fdd83530;
+}
+
 /* Арена */
 .arena {
     background: #3e0f0f;
@@ -104,25 +136,20 @@ body {
 .character {
     width: 110px;
     height: 110px;
-    background: #9b5e2e;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3.5rem;
+    overflow: hidden;
     border: 5px solid #fdd835;
     box-shadow: 0 0 25px #fbbf24;
-    overflow: hidden;
+    background: #9b5e2e;
 }
 
-.character img {
+.character-gif {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.emoji-fallback {
-    font-size: 4rem;
 }
 
 .rope-container {
@@ -176,6 +203,8 @@ body {
     margin-bottom: 20px;
     word-break: break-word;
     min-height: 140px;
+    max-height: 300px;
+    overflow-y: auto;
     color: #ffecb3;
     box-shadow: inset 0 4px 10px #1a0101;
     white-space: pre-wrap;
@@ -314,10 +343,19 @@ body {
     width: 90%;
 }
 
-.result-card img {
-    max-width: 160px;
-    margin-bottom: 20px;
-    border-radius: 30px;
+.result-gif-container {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #fdd835;
+}
+
+.result-gif {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 #result-title {
@@ -395,37 +433,7 @@ body {
     color: #fdd835;
     font-weight: bold;
 }
-.mode-selector {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-    justify-content: center;
-    width: 100%;
-}
 
-.btn-mode {
-    background: #5e1a1a;
-    color: #fdd835;
-    border: 2px solid #fdd835;
-    padding: 10px 20px;
-    border-radius: 40px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.2s;
-    flex: 1;
-    max-width: 200px;
-}
-
-.btn-mode.active {
-    background: #fdd835;
-    color: #4a0404;
-    border-color: #fff3b0;
-    font-weight: bold;
-}
-
-.btn-mode:hover {
-    background: #fdd83530;
-}
 /* Адаптивность */
 @media (max-width: 700px) {
     .game-title { font-size: 2rem; }

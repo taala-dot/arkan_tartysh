@@ -1,6 +1,4 @@
-// aiGenerator.js – бесконечный поток "ИИ-текста"
-// На самом деле просто комбинирует слова в случайном порядке, создавая бесконечный поток
-
+// aiGenerator.js – бесконечный генератор текста с большим словарём
 const words = [
     "Кыргызстан", "Бишкек", "Ысык-Көл", "Манас", "Ала-Тоо", "Нарын", "Ош", "Талас", 
     "Баткен", "Жалал-Абад", "Чүй", "Каракол", "Токтогул", "Кемин", "Сокулук", 
@@ -19,57 +17,86 @@ const words = [
     "тоо", "суу", "көл", "шаар", "айыл", "жол", "көпүрө", "базар", "мечит", "чиркөө",
     "достук", "сүйүү", "ыйман", "адеп", "акыл", "эмгек", "ыр", "бий", "күү", "обон",
     "күн", "ай", "жылдыз", "асман", "булут", "шамал", "жаан", "кар", "мөндүр",
-    "кыш", "жай", "күз", "жаз", "жылуу", "суук", "ысык", "салкын"
+    "кыш", "жай", "күз", "жаз", "жылуу", "суук", "ысык", "салкын", "баатыр", "эркиндик",
+    "туусуз", "желек", "мамлекет", "борбор", "район", "облус", "аймак", "чегара",
+    "эл", "улут", "тил", "салт", "каада", "маданият", "тарых", "мурас", "ата", "эне",
+    "бала", "кыз", "уул", "үй", "бүлө", "кошуна", "дос", "жолдош", "курбу", "агай",
+    "эжей", "карыя", "жаш", "кемпир", "чал", "наристе", "бөбөк", "эркек", "аял"
 ];
 
 const connectors = [
-    "жана", "менен", "үчүн", "боюнча", "чейин", "кийн", "мурун", "арасында",
+    "жана", "менен", "үчүн", "боюнча", "чейин", "кийин", "мурун", "арасында",
     "аркылуу", "себеби", "анткени", "ошондуктан", "бирок", "эгер", "дагы",
+    "гана", "да", "эле", "го", "турган", "келген", "бар", "жок", "көп", "аз",
+    "жакшы", "жаман", "чоң", "кичине", "бийик", "аласа", "терең", "тайыз",
+    "тез", "жай", "күчтүү", "алсыз", "бай", "кедей", "таттуу", "ачуу",
     "and", "with", "for", "in", "on", "at", "by", "from", "to", "the", "of",
-    "is", "are", "was", "were", "will", "be", "have", "has", "had"
+    "is", "are", "was", "were", "will", "be", "have", "has", "had", "can",
+    "could", "may", "might", "must", "shall", "should", "would"
 ];
 
-const punctuation = [". ", ", ", "? ", "! ", "... ", " — ", ": "];
+const punctuation = [". ", ", ", "? ", "! ", "... ", " — ", ": ", "; "];
 
-// Генерирует одно "предложение" (на самом деле просто набор слов)
-function generateRandomPhrase() {
-    const wordCount = Math.floor(Math.random() * 8) + 5; // 5-12 слов
-    let phrase = [];
-    
-    for (let i = 0; i < wordCount; i++) {
-        // 70% шанс взять слово, 30% - соединитель
-        if (Math.random() < 0.7) {
-            phrase.push(words[Math.floor(Math.random() * words.length)]);
+export class InfiniteTextGenerator {
+    constructor() {
+        this.words = words;
+        this.connectors = connectors;
+        this.punctuation = punctuation;
+        this.history = [];
+    }
+
+    generatePhrase() {
+        const wordCount = Math.floor(Math.random() * 12) + 6; // 6-18 слов
+        let phrase = [];
+        
+        for (let i = 0; i < wordCount; i++) {
+            if (Math.random() < 0.75) { // 75% слов, 25% соединителей
+                phrase.push(this.words[Math.floor(Math.random() * this.words.length)]);
+            } else {
+                phrase.push(this.connectors[Math.floor(Math.random() * this.connectors.length)]);
+            }
+        }
+        
+        // Первая буква заглавная
+        phrase[0] = phrase[0].charAt(0).toUpperCase() + phrase[0].slice(1);
+        
+        // Добавляем знак препинания
+        const punct = this.punctuation[Math.floor(Math.random() * this.punctuation.length)];
+        
+        const result = phrase.join(" ") + punct;
+        this.history.push(result);
+        if (this.history.length > 100) this.history.shift();
+        
+        return result;
+    }
+
+    generateParagraph(sentences = null) {
+        const count = sentences || Math.floor(Math.random() * 5) + 3; // 3-7 предложений
+        let paragraph = "";
+        for (let i = 0; i < count; i++) {
+            paragraph += this.generatePhrase();
+        }
+        return paragraph + "\n\n";
+    }
+
+    getNextChunk() {
+        // Иногда возвращаем целый абзац, иногда одно предложение
+        if (Math.random() < 0.3) {
+            return this.generateParagraph();
         } else {
-            phrase.push(connectors[Math.floor(Math.random() * connectors.length)]);
+            return this.generatePhrase();
         }
     }
-    
-    // Первая буква заглавная
-    phrase[0] = phrase[0].charAt(0).toUpperCase() + phrase[0].slice(1);
-    
-    // Добавляем знак препинания в конце
-    const punct = punctuation[Math.floor(Math.random() * punctuation.length)];
-    
-    return phrase.join(" ") + punct;
-}
 
-// Бесконечный генератор текста (возвращает функцию, которая всегда даёт новый текст)
-export function createInfiniteTextGenerator() {
-    return {
-        getNextChunk: () => generateRandomPhrase()
-    };
-}
-
-// Можно также получить сразу много текста (для теста)
-export function generateLargeText(paragraphs = 10) {
-    let text = "";
-    for (let i = 0; i < paragraphs; i++) {
-        const sentenceCount = Math.floor(Math.random() * 5) + 3; // 3-7 предложений
-        for (let j = 0; j < sentenceCount; j++) {
-            text += generateRandomPhrase();
+    // Получить большой текст для начальной загрузки
+    getInitialText() {
+        let text = "";
+        for (let i = 0; i < 5; i++) {
+            text += this.generateParagraph();
         }
-        text += "\n\n";
+        return text;
     }
-    return text;
 }
+
+// Создаём и экспортируем один экземпляр (синглтон)
+export const infiniteGenerator = new InfiniteTextGenerator();

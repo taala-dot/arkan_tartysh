@@ -18,21 +18,27 @@
             </div>
         </header>
 
-        <!-- Арена с верёвкой и персонажами -->
+        <!-- Арена с верёвкой и персонажами (GIF) -->
         <section class="arena">
             <div class="characters">
                 <div class="character left-character">
-                    <img src="assets/personss.gif" alt="Сол жак" onerror="this.onerror=null; this.outerHTML='<span class=\'emoji-fallback\'>🧑‍🌾</span>'">
+                    <img src="assets/personss.gif" alt="Сол жак" id="left-gif" class="character-gif" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%239b5e2e\' stroke=\'%23fdd835\' stroke-width=\'5\'/><text x=\'50\' y=\'70\' font-size=\'50\' text-anchor=\'middle\' fill=\'%23fdd835\'>🧑‍🌾</text></svg>'">
                 </div>
                 <div class="rope-container">
                     <div class="rope-line"></div>
                     <div class="rope-knot" id="rope-knot"></div>
                 </div>
                 <div class="character right-character">
-                    <img src="assets/personss.gif" alt="Оң жак" onerror="this.onerror=null; this.outerHTML='<span class=\'emoji-fallback\'>🧑‍🌾</span>'">
+                    <img src="assets/personss.gif" alt="Оң жак" id="right-gif" class="character-gif" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%239b5e2e\' stroke=\'%23fdd835\' stroke-width=\'5\'/><text x=\'50\' y=\'70\' font-size=\'50\' text-anchor=\'middle\' fill=\'%23fdd835\'>🧑‍🌾</text></svg>'">
                 </div>
             </div>
         </section>
+
+        <!-- Переключатель режимов -->
+        <div class="mode-selector">
+            <button id="classic-mode-btn" class="btn-mode active">🏹 Классический</button>
+            <button id="speed-mode-btn" class="btn-mode">⚡ Бесконечный (60с)</button>
+        </div>
 
         <!-- Зона печати -->
         <section class="typing-area">
@@ -49,25 +55,22 @@
             </div>
         </section>
 
-        <!-- Окно результата (победа/поражение) -->
+        <!-- Окно результата (победа/поражение) с GIF -->
         <div id="result-overlay" class="result-overlay hidden">
             <div class="result-card">
-                <img src="assets/win.gif" alt="Жеңиш" id="win-gif" onerror="this.onerror=null; this.style.display='none'">
-                <img src="assets/lose.gif" alt="Жеңилүү" id="lose-gif" onerror="this.onerror=null; this.style.display='none'">
+                <div class="result-gif-container">
+                    <img src="assets/win.gif" alt="Жеңиш" id="win-gif" class="result-gif" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 200 200\'><circle cx=\'100\' cy=\'100\' r=\'90\' fill=\'%234ade80\'/><text x=\'100\' y=\'130\' font-size=\'80\' text-anchor=\'middle\' fill=\'white\'>🏆</text></svg>'">
+                    <img src="assets/lose.gif" alt="Жеңилүү" id="lose-gif" class="result-gif" style="display:none;" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 200 200\'><circle cx=\'100\' cy=\'100\' r=\'90\' fill=\'%23f87171\'/><text x=\'100\' y=\'130\' font-size=\'80\' text-anchor=\'middle\' fill=\'white\'>💔</text></svg>'">
+                </div>
                 <h2 id="result-title"></h2>
                 <p id="result-stats"></p>
                 <button id="result-restart-btn" class="btn-primary">Дагы бир жолу</button>
             </div>
         </div>
 
-        <div class="mode-selector">
-    <button id="classic-mode-btn" class="btn-mode active">Классический</button>
-    <button id="speed-mode-btn" class="btn-mode">Бесконечный (60с)</button>
-</div>
-
-        <!-- Таблица лидеров (топ-10) -->
+        <!-- Таблица лидеров -->
         <section class="leaderboard">
-            <h2>🏆 Чемпиондор <span class="leaderboard-hint">(Топ 10 WPM)</span></h2>
+            <h2>🏆 Чемпиондор <span class="leaderboard-hint" id="leaderboard-title">(Топ 10 WPM)</span></h2>
             <div class="leaderboard-entry">
                 <input type="text" id="player-name" placeholder="Атыңыз" maxlength="20">
                 <button id="save-score-btn" class="btn-secondary" disabled>💾 Сактоо</button>
@@ -77,9 +80,7 @@
             </ol>
         </section>
     </div>
-    
 
-    <!-- Подключение главного модуля JavaScript -->
     <script type="module" src="game.js"></script>
 </body>
 </html>
