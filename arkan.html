@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="kg"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аркан Тартыш: ГЕОГРАФИЯ </title> 
+    <link rel="stylesheet" href="arkan_files/style.css">
+    <link rel="stylesheet" href="arkan_files/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="https://janbolot.oshsu.kg/predmet/geografiya/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, user-scalable=yes">
+</head>
+
+<body>
+
+    <audio id="background-music" src="arkan_files/audio.mp3" loop=""></audio>
+    
+    <h1>АРКАН ТАРТЫШ : ГЕОГРАФИЯ</h1>
+    <p>
+        Туура жооп — команда арканды өз тарабына тартат. <br>
+
+Ката жооп — аркан каршы тарапка жылып, дароо жаңы суроо чыгат.
+    </p>
+    
+    <div id="startScreen" style="display: none;">
+        <div id="startModal">
+            <h2>КОМАНДАЛАРДЫ ДАЯРДАҢЫЗ</h2>
+            <div class="teamSetup">
+                <div class="teamBox">
+                    <h3 style="color:#3f51b5;">1-ТОП (КӨК)</h3>
+                    <input type="text" id="nameLeft" placeholder="Аталышы" value="1">
+                </div>
+                <div class="teamBox">
+                    <h3 style="color:#e53935;">2-ТОП (КЫЗЫЛ)</h3>
+                    <input type="text" id="nameRight" placeholder="Аталышы" value="2">
+                </div>
+            </div>
+            <button id="startBtn">ОЮНДУ БАШТОО</button>
+        </div>
+    </div>
+    
+    <div id="countdown" style="display: none;" class="go">БАШТАДЫК!</div>
+
+    <div class="main-game-container">
+        <div class="panel" id="leftPanel">
+            <div class="header" id="headerLeft">1</div>
+            <div class="problem-box" id="leftProblem">Кыргызстандагы эң бийик чоку.</div>
+            <div class="quiz-keypad" id="leftQuizKeypad"><button class="quiz-btn">Ак-Сай</button><button class="quiz-btn">Мөңгү-Төр</button><button class="quiz-btn">Чыңгыз Айтматов чокусу</button><button class="quiz-btn">Хан-Тенгри</button><button class="quiz-btn">Манзат</button><button class="quiz-btn">Жеңиш чокусу</button></div>
+        </div>
+
+        <div id="arena">
+            <div id="winLine"></div> 
+            
+            <div id="imageContainer" style="transform: translateX(calc(-50% + 0px));">
+                <img style="width:100%;" src="arkan_files/personss.gif" id="tugOfWarImage" alt="Аркан Тартыш">
+            </div>
+
+            <div id="arenaWinnerDisplay" style="display:none;">
+                <div id="winGifContainer"> 
+                   <h2 id="winnerNameArena" class="winner-text"></h2>
+                 <h3 class="winner-text-small">Жеңишке жетишти! Куттуктайбыз</h3>
+                 <button class="btn btn-go" style="margin-top: 20px;" onclick="location.reload()">КАЙРА ОЙНОО</button>
+                    <img src="arkan_files/win_blue.gif" id="blueWinGif" class="win-gif" alt="Көк команда жеңди" style="display: none;">
+                    <img src="arkan_files/win_red.gif" id="redWinGif" class="win-gif" alt="Кызыл команда жеңди">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" id="rightPanel">
+            <div class="header" id="headerRight">2</div>
+            <div class="problem-box" id="rightProblem">Күн тутулуу процесси кандай аталат?</div>
+            <div class="quiz-keypad" id="rightQuizKeypad"><button class="quiz-btn">Эклиптика</button><button class="quiz-btn">Парад</button><button class="quiz-btn">Революция</button><button class="quiz-btn">Циклон</button><button class="quiz-btn">Пас</button><button class="quiz-btn">Затмение</button></div>
+        </div>
+    </div>
+    <br>
+    
+    <h3><i class="fa fa-instagram" aria-hidden="true"></i> <a href="https://instagram.com/joni.kalbaev">Автор - Жанболот Калбаев</a></h3>
+    
+    <script src="arkan_files/script.js"></script>
+
+</body></html>

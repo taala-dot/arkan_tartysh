@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кыргызская перетягивалка</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Шапка с игровыми показателями -->
+        <header class="game-header">
+            <h1 class="game-title">⚡ КЫРГЫЗ КҮЧ ⚡</h1>
+            <div class="stats-bar">
+                <div class="stat-item">⏳ Убакыт: <span id="timer-display">00</span>с</div>
+                <div class="stat-item">📝 WPM: <span id="wpm-display">0</span></div>
+                <div class="stat-item">🎯 Тактык: <span id="accuracy-display">100</span>%</div>
+            </div>
+        </header>
+
+        <!-- Арена с верёвкой и персонажами -->
+        <section class="arena">
+            <div class="characters">
+                <div class="character left-character">
+                    <img src="assets/personss.gif" alt="Сол жак" onerror="this.onerror=null; this.outerHTML='<span class=\'emoji-fallback\'>🧑‍🌾</span>'">
+                </div>
+                <div class="rope-container">
+                    <div class="rope-line"></div>
+                    <div class="rope-knot" id="rope-knot"></div>
+                </div>
+                <div class="character right-character">
+                    <img src="assets/personss.gif" alt="Оң жак" onerror="this.onerror=null; this.outerHTML='<span class=\'emoji-fallback\'>🧑‍🌾</span>'">
+                </div>
+            </div>
+        </section>
+
+        <!-- Зона печати -->
+        <section class="typing-area">
+            <div class="sentence-display" id="sentence-display"></div>
+            <input type="text" id="typing-input" placeholder="Башта ..." disabled autocomplete="off">
+            <div class="controls">
+                <select id="difficulty-select">
+                    <option value="easy">Жеңил (60с)</option>
+                    <option value="medium" selected>Орто (45с)</option>
+                    <option value="hard">Кыйын (30с)</option>
+                </select>
+                <button id="start-btn" class="btn-primary">🚀 Баштоо</button>
+                <button id="restart-btn" class="btn-secondary" disabled>🔄 Кайра</button>
+            </div>
+        </section>
+
+        <!-- Окно результата (победа/поражение) -->
+        <div id="result-overlay" class="result-overlay hidden">
+            <div class="result-card">
+                <img src="assets/win.gif" alt="Жеңиш" id="win-gif" onerror="this.onerror=null; this.style.display='none'">
+                <img src="assets/lose.gif" alt="Жеңилүү" id="lose-gif" onerror="this.onerror=null; this.style.display='none'">
+                <h2 id="result-title"></h2>
+                <p id="result-stats"></p>
+                <button id="result-restart-btn" class="btn-primary">Дагы бир жолу</button>
+            </div>
+        </div>
+
+        <div class="mode-selector">
+    <button id="classic-mode-btn" class="btn-mode active">Классический</button>
+    <button id="speed-mode-btn" class="btn-mode">Бесконечный (60с)</button>
+</div>
+
+        <!-- Таблица лидеров (топ-10) -->
+        <section class="leaderboard">
+            <h2>🏆 Чемпиондор <span class="leaderboard-hint">(Топ 10 WPM)</span></h2>
+            <div class="leaderboard-entry">
+                <input type="text" id="player-name" placeholder="Атыңыз" maxlength="20">
+                <button id="save-score-btn" class="btn-secondary" disabled>💾 Сактоо</button>
+            </div>
+            <ol id="leaderboard-list" class="leaderboard-list">
+                <li>Жүктөлүүдө...</li>
+            </ol>
+        </section>
+    </div>
+    
+
+    <!-- Подключение главного модуля JavaScript -->
+    <script type="module" src="game.js"></script>
+</body>
+</html>

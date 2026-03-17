@@ -1,0 +1,437 @@
+/* ===== КЫРГЫЗСКИЙ СТИЛЬ ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+    background: #4a0404; /* тёмно-красный */
+    background-image: radial-gradient(circle at 10% 30%, #8b0000 0%, #4a0404 90%);
+    color: #fff3e0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.game-container {
+    max-width: 1000px;
+    width: 100%;
+    background: #7a1f1f; /* бордовый */
+    border-radius: 40px 40px 20px 20px;
+    padding: 24px;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.8), 0 0 0 2px #f0c45a inset;
+    border: 4px solid #d4a017;
+    position: relative;
+}
+
+/* Имитация кыргызского орнамента */
+.game-container::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px dashed #fdd835;
+    border-radius: 30px;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+/* Шапка */
+.game-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.game-title {
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #fdd835, #fff3b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 0 #b33e3e;
+    margin-bottom: 12px;
+    font-weight: 800;
+}
+
+.stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    background: #5e1a1a;
+    padding: 12px 24px;
+    border-radius: 60px;
+    border: 2px solid #f0b300;
+    font-size: 1.2rem;
+    flex-wrap: wrap;
+    color: #ffe484;
+}
+
+.stat-item span {
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-left: 8px;
+    background: #a82424;
+    padding: 2px 12px;
+    border-radius: 40px;
+}
+
+/* Арена */
+.arena {
+    background: #3e0f0f;
+    border-radius: 60px;
+    padding: 30px 20px;
+    margin-bottom: 24px;
+    border: 3px solid #fdd835;
+    box-shadow: inset 0 0 30px #2a0000;
+}
+
+.characters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: relative;
+    height: 140px;
+}
+
+.character {
+    width: 110px;
+    height: 110px;
+    background: #9b5e2e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    border: 5px solid #fdd835;
+    box-shadow: 0 0 25px #fbbf24;
+    overflow: hidden;
+}
+
+.character img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.emoji-fallback {
+    font-size: 4rem;
+}
+
+.rope-container {
+    flex: 1;
+    height: 14px;
+    background: #a1662f;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 0 15px #e6b422;
+}
+
+.rope-line {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #b87c3a, #e5a836, #b87c3a);
+    border-radius: 10px;
+}
+
+.rope-knot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 32px;
+    background: #fdd835;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 25px #f9a825;
+    border: 4px solid #b37400;
+    transition: transform 0.1s ease-out;
+    z-index: 5;
+}
+
+/* Зона печати */
+.typing-area {
+    background: #5a1e1e;
+    border-radius: 40px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 2px solid #fbc02d;
+}
+
+.sentence-display {
+    background: #2f0c0c;
+    padding: 24px;
+    border-radius: 30px;
+    font-size: 2rem;
+    font-family: 'Courier New', monospace;
+    line-height: 2.4rem;
+    border: 3px solid #ffd54f;
+    margin-bottom: 20px;
+    word-break: break-word;
+    min-height: 140px;
+    color: #ffecb3;
+    box-shadow: inset 0 4px 10px #1a0101;
+    white-space: pre-wrap;
+}
+
+.sentence-display span {
+    display: inline-block;
+    transition: all 0.1s;
+}
+
+.sentence-display span.correct {
+    color: #b9f6ca;
+    background: #1b5e2040;
+    border-radius: 6px;
+}
+
+.sentence-display span.wrong {
+    color: #ff8a80;
+    background: #b71c1c40;
+    border-radius: 6px;
+    text-decoration: underline wavy #ff5252;
+}
+
+#typing-input {
+    width: 100%;
+    padding: 20px 28px;
+    font-size: 1.8rem;
+    background: #3b1313;
+    border: 4px solid #ffb300;
+    border-radius: 70px;
+    color: #ffe082;
+    outline: none;
+    margin-bottom: 20px;
+    transition: 0.2s;
+}
+
+#typing-input:focus {
+    border-color: #ffd54f;
+    box-shadow: 0 0 25px #ffb300;
+}
+
+#typing-input:disabled {
+    opacity: 0.5;
+    border-color: #7b5f2a;
+}
+
+.controls {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#difficulty-select {
+    background: #3b1313;
+    color: #ffe484;
+    border: 3px solid #f0b300;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    flex: 1;
+    min-width: 170px;
+}
+
+.btn-primary {
+    background: #fbc02d;
+    color: #4a0404;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 3px solid #fff3b0;
+    box-shadow: 0 4px 0 #b37400;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #ffd54f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #b37400;
+}
+
+.btn-primary:active:not(:disabled) {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #b37400;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #fdd835;
+    border: 3px solid #fdd835;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #fdd83530;
+    border-color: #ffb300;
+}
+
+.btn-primary:disabled, .btn-secondary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Результат (оверлей) */
+.result-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(40, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+}
+
+.result-overlay.hidden {
+    display: none;
+}
+
+.result-card {
+    background: #7a1f1f;
+    padding: 40px 50px;
+    border-radius: 80px;
+    text-align: center;
+    border: 6px solid #fdd835;
+    max-width: 450px;
+    width: 90%;
+}
+
+.result-card img {
+    max-width: 160px;
+    margin-bottom: 20px;
+    border-radius: 30px;
+}
+
+#result-title {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #fdd835;
+}
+
+#result-stats {
+    font-size: 1.5rem;
+    margin-bottom: 35px;
+    color: #ffecb3;
+}
+
+/* Таблица лидеров */
+.leaderboard {
+    background: #5a1e1e;
+    border-radius: 40px;
+    padding: 24px;
+    border: 2px solid #fbc02d;
+}
+
+.leaderboard h2 {
+    color: #fdd835;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.8rem;
+}
+
+.leaderboard-hint {
+    font-size: 1rem;
+    color: #ffb74d;
+}
+
+.leaderboard-entry {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+#player-name {
+    flex: 1;
+    background: #3b1313;
+    border: 3px solid #fbc02d;
+    border-radius: 50px;
+    padding: 12px 22px;
+    color: #ffe484;
+    font-size: 1.1rem;
+}
+
+.leaderboard-list {
+    list-style: none;
+    background: #3b1313;
+    border-radius: 30px;
+    padding: 16px;
+    border: 2px solid #fbc02d;
+}
+
+.leaderboard-list li {
+    padding: 12px 18px;
+    border-bottom: 1px solid #a1662f;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    color: #ffecb3;
+}
+
+.leaderboard-list li:last-child {
+    border-bottom: none;
+}
+
+.leaderboard-list li span {
+    color: #fdd835;
+    font-weight: bold;
+}
+.mode-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-mode {
+    background: #5e1a1a;
+    color: #fdd835;
+    border: 2px solid #fdd835;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    flex: 1;
+    max-width: 200px;
+}
+
+.btn-mode.active {
+    background: #fdd835;
+    color: #4a0404;
+    border-color: #fff3b0;
+    font-weight: bold;
+}
+
+.btn-mode:hover {
+    background: #fdd83530;
+}
+/* Адаптивность */
+@media (max-width: 700px) {
+    .game-title { font-size: 2rem; }
+    .stats-bar { gap: 15px; font-size: 1rem; }
+    .sentence-display { font-size: 1.5rem; }
+    .character { width: 80px; height: 80px; }
+    .rope-knot { width: 26px; height: 26px; }
+    .btn-primary, .btn-secondary { font-size: 1rem; padding: 10px 20px; }
+}
